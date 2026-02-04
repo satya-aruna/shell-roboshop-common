@@ -177,13 +177,13 @@ MODIFY_CONFIG() {
 
     SN=$1
 
-    if [ $SN -eq "mongod" ]; then
+    if [ "$SN" = "mongod" ]; then
         sed -i 's/127.0.0.1/0.0.0.0/g' /etc/$SN.conf 
         VALIDATE $? "$SN.conf change to allow all connections"
-    else if [ $SN -eq "redis" ]; then
+    else if [ "$SN" = "redis" ]; then
         sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/$SN/$SN.conf
         VALIDATE $? "$SN.conf change to allow all connections and disable protected-mode"
-    else if [ $SN -eq "nginx" ]; then
+    else if [ "$SN" = "nginx" ]; then
         cp $SCRIPT_DIR/$SN.conf /etc/$SN/$SN.conf
         VALIDATE $? "Create $SN Reverse Proxy Configuration"
     else
