@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source ./common.sh
 source ./installandsetup.sh
 
 SERVER=$1
