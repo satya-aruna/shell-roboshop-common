@@ -51,6 +51,8 @@ INSTALL_SETUP()
         VERSION=1.24
         ENABLE_VERSION $PKGNAME $VERSION
         LABEL="Nginx"
+    else
+        echo "Nothing to do"
    fi
 
     INSTALL_PACKAGE $LABEL $PKGNAME

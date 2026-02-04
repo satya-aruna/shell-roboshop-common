@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./common.sh
 source ./installandsetup.sh
 
-INSTALL_SETUP $1
+SERVER=$1
+
+INSTALL_SETUP 
