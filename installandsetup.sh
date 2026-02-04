@@ -3,8 +3,8 @@
 source ./common.sh
 
 # Takes command line arguments servicename, packagename
-INSTALL_SETUP() 
-{
+INSTALL_SETUP() {
+
     SERVERNAME=$1
     SERVICENAME=$SERVERNAME
     PKGNAME=""
@@ -126,5 +126,6 @@ INSTALL_SETUP()
     SYSCTL_RESTART $SRVERNAME $SERVICENAME
 
 }
+
 
 

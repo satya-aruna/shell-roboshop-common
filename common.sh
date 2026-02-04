@@ -19,8 +19,8 @@ MYSQL_PASSWD=RoboShop@1
 
 mkdir -p $LOGS_FOLDER
 
-VALIDATE_USER()
-{
+VALIDATE_USER() {
+
     if [ $USERID -ne 0 ]; then
         echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
         exit 1 # we need to exit with failure exit code
@@ -28,8 +28,8 @@ VALIDATE_USER()
 }
 
 # Validate the status of a command
-VALIDATE() 
-{
+VALIDATE() {
+
     if [ $1 -ne 0 ]; then
         echo -e "$(date "+%Y-%m-%d %H:%M:%S") | $2 ...$R FAILURE $N" | tee -a $LOGS_FILE
         exit 1
@@ -39,8 +39,8 @@ VALIDATE()
 }
 
 
-SETUP_REPOFILE()
-{
+SETUP_REPOFILE() {
+
     SERVICE=$1
     REPO_FILE=$2
 
@@ -48,8 +48,8 @@ SETUP_REPOFILE()
     VALIDATE $? "Setup $SERVICE repo"
 }
 
-ENABLE_VERSION()
-{
+ENABLE_VERSION() {
+
     PKG_NAME=$1
     VER=$2
 
@@ -60,8 +60,8 @@ ENABLE_VERSION()
     VALIDATE $? "Enabling $PKG_NAME version $VER"
 }
 
-INSTALL_PACKAGE()
-{
+INSTALL_PACKAGE() {
+
     SRVCNAME=$1
     PCK_NAME=$2
 
@@ -70,8 +70,8 @@ INSTALL_PACKAGE()
 
 }
 
-CREATE_APPUSER()
-{
+CREATE_APPUSER() {
+
     id roboshop &>> $LOGS_FILE
     if [ $? -ne 0 ]; then
         useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>> $LOGS_FILE
@@ -81,8 +81,8 @@ CREATE_APPUSER()
     fi
 }
 
-DOWNLOAD_UNZIPAPP()
-{
+DOWNLOAD_UNZIPAPP() {
+
     APPNAME=$1
 
     if [ $APPNAME -ne "frontend" ]; then
@@ -118,8 +118,8 @@ DOWNLOAD_UNZIPAPP()
     fi
 }
 
-INSTALL_APP()
-{
+INSTALL_APP() {
+
     PKG=$1
 
     if [ $PKG -eq "nodejs" ]; then
@@ -150,8 +150,8 @@ INSTALL_APP()
 }
 
 
-SETUP_SYSD_SERVICE()
-{
+SETUP_SYSD_SERVICE() {
+
     SVCNAME=$1
 
     cp $SCRIPT_DIR/$SVCNAME.service /etc/systemd/system/$SVCNAME.service
@@ -161,8 +161,8 @@ SETUP_SYSD_SERVICE()
     VALIDATE $? "Reload the newly created systemd $SVCNAME service"
 }
 
-ENABLE_START_SYSCTL()
-{
+ENABLE_START_SYSCTL() {
+
     SRVR=$1
     SNAME=$2
 
@@ -173,8 +173,8 @@ ENABLE_START_SYSCTL()
     VALIDATE $? "Start $SRVR service"
 }
 
-MODIFY_CONFIG()
-{
+MODIFY_CONFIG() {
+
     SN=$1
 
     if [ $SN -eq "mongod" ]; then
@@ -191,8 +191,8 @@ MODIFY_CONFIG()
     fi
 }
 
-SYSCTL_RESTART()
-{
+SYSCTL_RESTART() {
+
     SRNM=$1
     SNM=$2
 
@@ -201,5 +201,6 @@ SYSCTL_RESTART()
 }
 
 END_TIME=$(date +%s)
-TOTAL_TIME=$(( $END_TIME - $STARTTIME ))
+#TOTAL_TIME=$(( $END_TIME - $STARTTIME ))
+
 
