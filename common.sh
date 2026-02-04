@@ -85,7 +85,7 @@ DOWNLOAD_UNZIPAPP() {
 
     APPNAME=$1
 
-    if [ $APPNAME -ne "frontend" ]; then
+    if [ "$APPNAME" = "frontend" ]; then
 
         rm -rf /app
         VALIDATE $? "Remove the /app directory if already exists"
@@ -186,8 +186,6 @@ MODIFY_CONFIG() {
     elif [ "$SN" = "nginx" ]; then
         cp $SCRIPT_DIR/$SN.conf /etc/$SN/$SN.conf
         VALIDATE $? "Create $SN Reverse Proxy Configuration"
-    else
-        echo "Invalid Service: $SN"
     fi
 }
 
@@ -201,6 +199,6 @@ SYSCTL_RESTART() {
 }
 
 END_TIME=$(date +%s)
-#TOTAL_TIME=$(( $END_TIME - $STARTTIME ))
+TOTAL_TIME=$(( $END_TIME - $STARTTIME ))
 
 

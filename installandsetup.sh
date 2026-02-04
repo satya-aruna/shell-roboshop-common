@@ -13,26 +13,26 @@ INSTALL_SETUP() {
    
     VALIDATE_USER
 
-    if [ $SERVERNAME -eq "mongodb" ]; then
+    if [ "$SERVERNAME" = "mongodb" ]; then
         SETUP_REPOFILE $SERVERNAME mongo.repo
         PKGNAME=mongodb-org
         SERVICENAME=mongod 
         LABEL="Mongodb Server"   
-    elif [$SERVERNAME -eq "rabbitmq" ]; then
+    elif [ "$SERVERNAME" = "rabbitmq" ]; then
         SETUP_REPOFILE $SERVERNAME rabbitmq.repo 
         PKGNAME=rabbitmq-server
         SERVICENAME=rabbitmq-server 
         LABEL="RabbitMQ Server"
-    elif [ $SERVERNAME -eq "mysql" ]; then
+    elif [ "$SERVERNAME" = "mysql" ]; then
         PKGNAME=mysql-server
         SERVICENAME=mysqld
         LABEL="MySQL Server"
-    elif [ $SERVERNAME -eq "redis" ]; then
+    elif [ "$SERVERNAME" = "redis" ]; then
         PKGNAME=redis
         VERSION=7
         LABEL="Redis Server"
         ENABLE_VERSION $PKGNAME $VERSION
-    elif [[ $SERVERNAME -eq "catalogue" || $SERVERNAME -eq "user" || $SERVERNAME -eq "cart" ]]; then
+    elif [[ "$SERVERNAME" = "catalogue" || "$SERVERNAME" = "user" || "$SERVERNAME" = "cart" ]]; then
         PKGNAME=nodejs
         VERSION=20
         ENABLE_VERSION $PKGNAME $VERSION
@@ -58,24 +58,24 @@ INSTALL_SETUP() {
 
     INSTALL_PACKAGE $LABEL $PKGNAME
 
-    if [[ $PKGNAME -eq "nodejs" || $PKGNAME -eq "maven" || $PKGNAME -eq "python3 gcc python3-devel" || $PKGNAME -eq "golang" ]]; then
+    if [[ "$PKGNAME" = "nodejs" || "$PKGNAME" =  "maven" || "$PKGNAME" =  "python3 gcc python3-devel" || "$PKGNAME" = "golang" ]]; then
         CREATE_APPUSER
         DOWNLOAD_UNZIPAPP $SERVICENAME
         INSTALL_APP $PKGNAME
         SETUP_SYSD_SERVICE $SERVICENAME
-    elif [ $SERVICENAME -eq "frontend" ]; then
+    elif [ "$SERVICENAME" = "frontend" ]; then
         ENABLE_START_SYSCTL $LABEL $PKGNAME
         DOWNLOAD_UNZIPAPP $SERVICENAME
         SERVICENAME=$PKGNAME
     fi
 
-    if [[ $SERVICENAME -eq "mongod" || $SERVICENAME -eq "redis" || $SERVICENAME -eq "nginx" ]]; then
+    if [[ "$SERVICENAME" = "mongod" || "$SERVICENAME" = "redis" || "$SERVICENAME" = "nginx" ]]; then
         MODIFY_CONFIG $SERVICENAME
     fi
 
     ENABLE_START_SYSCTL $SRVERNAME $SERVICENAME
 
-    if [ $SERVICENAME -eq "catalogue" ]; then
+    if [ "$SERVICENAME" = "catalogue" ]; then
         SETUP_REPOFILE mongodb mongo.repo
         INSTALL_PACKAGE "Mongodb Client" mongodb-mongosh
         if [ $(mongosh --host $MONGODB_HOST --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0 ]; then
@@ -86,13 +86,13 @@ INSTALL_SETUP() {
         fi
     fi
 
-    if [ $SERVICENAME -eq "mysqld" ]; then
+    if [ "$SERVICENAME" = "mysqld" ]; then
         # Set root password
         mysql_secure_installation --set-root-pass RoboShop@1
         VALIDATE $? "Changing the default root password"
     fi
 
-    if [ $SERVICENAME -eq "shipping" ]; then
+    if [ "$SERVICENAME" = "shipping" ]; then
 
         INSTALL_PACKAGE mysql
 
@@ -107,7 +107,7 @@ INSTALL_SETUP() {
 
     fi
 
-    if [ $SERVICENAME -eq "rabbitmq-server" ]; then
+    if [ "$SERVICENAME" = "rabbitmq-server" ]; then
         # Check if a user named 'roboshop' exists
         rabbitmqctl list_users | grep -q "^roboshop\s"
 
