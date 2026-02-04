@@ -74,7 +74,7 @@ INSTALL_SETUP()
 
     ENABLE_START_SYSCTL $SRVERNAME $SERVICENAME
 
-    if [ $SERVICENAME -eq "catalogue" ] then
+    if [ $SERVICENAME -eq "catalogue" ]; then
         SETUP_REPOFILE mongodb mongo.repo
         INSTALL_PACKAGE "Mongodb Client" mongodb-mongosh
         if [ $(mongosh --host $MONGODB_HOST --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0 ]; then

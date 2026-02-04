@@ -148,6 +148,7 @@ INSTALL_APP()
     fi
 }
 
+
 SETUP_SYSD_SERVICE()
 {
     SVCNAME=$1
