@@ -143,11 +143,8 @@ INSTALL_APP() {
 
         go build  &>> $LOGS_FILE
         VALIDATE $? "Build the dispatch application"
-    else
-        echo "Invalid pakage: $PKG"
     fi
-
-}
+    }
 
 
 SETUP_SYSD_SERVICE() {
