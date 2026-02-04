@@ -101,7 +101,7 @@ DOWNLOAD_UNZIPAPP() {
         unzip /tmp/$APPNAME.zip  &>> $LOGS_FILE
         VALIDATE $? "Unzip the application code"
     
-    else
+    elif [ "$APPNAME" = "frontend"  ]
 
         rm -rf /usr/share/nginx/html/* 
         VALIDATE $? "Remove the default contentent of web server"

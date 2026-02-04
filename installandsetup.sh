@@ -37,16 +37,16 @@ INSTALL_SETUP() {
         VERSION=20
         ENABLE_VERSION $PKGNAME $VERSION
         LABEL="NodeJS"
-    elif [ $SERVERNAME -eq "shipping" ]; then
+    elif [ "$SERVERNAME" = "shipping" ]; then
         PKGNAME=maven
         LABEL="Maven"
-    elif [ $SERVERNAME -eq "payment" ]; then
+    elif [ "$SERVERNAME" = "payment" ]; then
         PKGNAME="python3 gcc python3-devel"
         LABEL="Python"
-    elif [ $SERVERNAME -eq "dispatch" ]; then
+    elif [ "$SERVERNAME" = "dispatch" ]; then
         PKGNAME=golang
         LABEL="GOLang"
-    elif [ $SERVERNAME -eq "frontend" ]; then
+    elif [ "$SERVERNAME" = "frontend" ]; then
         PKGNAME=nginx
         VERSION=1.24
         ENABLE_VERSION $PKGNAME $VERSION
@@ -54,7 +54,6 @@ INSTALL_SETUP() {
     else
         echo "Nothing to do"
     fi
-
 
     INSTALL_PACKAGE $LABEL $PKGNAME
 
