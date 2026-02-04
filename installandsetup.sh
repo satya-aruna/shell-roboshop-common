@@ -14,40 +14,40 @@ INSTALL_SETUP() {
     VALIDATE_USER
 
     if [ "$SERVERNAME" = "mongodb" ]; then
-        SETUP_REPOFILE $SERVERNAME mongo.repo
-        PKGNAME=mongodb-org
-        SERVICENAME=mongod 
+        SETUP_REPOFILE "$SERVERNAME" "mongo.repo"
+        PKGNAME="mongodb-org"
+        SERVICENAME="mongod"
         LABEL="Mongodb Server"   
     elif [ "$SERVERNAME" = "rabbitmq" ]; then
         SETUP_REPOFILE "$SERVERNAME" rabbitmq.repo 
-        PKGNAME=rabbitmq-server
-        SERVICENAME=rabbitmq-server 
+        PKGNAME="rabbitmq-server"
+        SERVICENAME="rabbitmq-server" 
         LABEL="RabbitMQ Server"
     elif [ "$SERVERNAME" = "mysql" ]; then
-        PKGNAME=mysql-server
-        SERVICENAME=mysqld
+        PKGNAME="mysql-server"
+        SERVICENAME="mysqld"
         LABEL="MySQL Server"
     elif [ "$SERVERNAME" = "redis" ]; then
-        PKGNAME=redis
+        PKGNAME="redis"
         VERSION=7
         LABEL="Redis Server"
         ENABLE_VERSION "$PKGNAME" "$VERSION"
     elif [[ "$SERVERNAME" = "catalogue" || "$SERVERNAME" = "user" || "$SERVERNAME" = "cart" ]]; then
-        PKGNAME=nodejs
+        PKGNAME="nodejs"
         VERSION=20
         ENABLE_VERSION "$PKGNAME" "$VERSION"
         LABEL="NodeJS"
     elif [ "$SERVERNAME" = "shipping" ]; then
-        PKGNAME=maven
+        PKGNAME="maven"
         LABEL="Maven"
     elif [ "$SERVERNAME" = "payment" ]; then
         PKGNAME="python3 gcc python3-devel"
         LABEL="Python"
     elif [ "$SERVERNAME" = "dispatch" ]; then
-        PKGNAME=golang
+        PKGNAME="golang"
         LABEL="GOLang"
     elif [ "$SERVERNAME" = "frontend" ]; then
-        PKGNAME=nginx
+        PKGNAME="nginx"
         VERSION=1.24
         ENABLE_VERSION "$PKGNAME" "$VERSION"
         LABEL="Nginx"
@@ -73,8 +73,8 @@ INSTALL_SETUP() {
     ENABLE_START_SYSCTL "$SRVERNAME" "$SERVICENAME"
 
     if [ "$SERVICENAME" = "catalogue" ]; then
-        SETUP_REPOFILE mongodb mongo.repo
-        INSTALL_PACKAGE "Mongodb Client" mongodb-mongosh
+        SETUP_REPOFILE "mongodb" "mongo.repo"
+        INSTALL_PACKAGE "Mongodb Client" "mongodb-mongosh"
         if [ $(mongosh --host $MONGODB_HOST --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0 ]; then
             mongosh --host $MONGODB_HOST </app/db/master-data.js &>> $LOGS_FILE
             VALIDATE $? "Loading the catalogue data into MongoDB"
@@ -91,15 +91,15 @@ INSTALL_SETUP() {
 
     if [ "$SERVICENAME" = "shipping" ]; then
 
-        INSTALL_PACKAGE "MySQL Client" mysql
+        INSTALL_PACKAGE "MySQL Client" "mysql"
 
-        mysql -h $MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWD < /app/db/schema.sql
+        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWD" < /app/db/schema.sql
         VALIDATE $? "Load Schema in mysql database"
 
-        mysql -h $MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWD < /app/db/app-user.sql 
+        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWD" < /app/db/app-user.sql 
         VALIDATE $? "Creating app user in mysql database"
 
-        mysql -h $MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWD < /app/db/master-data.sql
+        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWD" < /app/db/master-data.sql
         VALIDATE $? "Loading the Master data for shipping"
 
     fi
