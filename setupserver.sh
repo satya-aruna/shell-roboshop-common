@@ -5,4 +5,4 @@ source ./installandsetup.sh
 
 SERVER=$1
 
-INSTALL_SETUP 
+INSTALL_SETUP $SERVER

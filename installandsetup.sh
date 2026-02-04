@@ -53,7 +53,7 @@ INSTALL_SETUP()
         LABEL="Nginx"
     else
         echo "Nothing to do"
-   fi
+    fi
 
     INSTALL_PACKAGE $LABEL $PKGNAME
 
