@@ -91,7 +91,7 @@ INSTALL_SETUP() {
 
     if [ "$SERVICENAME" = "shipping" ]; then
 
-        INSTALL_PACKAGE mysql
+        INSTALL_PACKAGE "MySQL Client" mysql
 
         mysql -h $MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWD < /app/db/schema.sql
         VALIDATE $? "Load Schema in mysql database"
