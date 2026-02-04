@@ -122,19 +122,19 @@ INSTALL_APP() {
 
     PKG=$1
 
-    if [ "$PKG" -eq "nodejs" ]; then
+    if [ "$PKG" = "nodejs" ]; then
         npm install  &>> $LOGS_FILE
         VALIDATE $? "Install dependencies"
-    else if [ "$PKG" -eq "maven" ]; then
+    else if [ "$PKG" = "maven" ]; then
         mvn clean package  &>> $LOGS_FILE
         VALIDATE $? "Download dependencies and build the application"
 
         mv target/shipping-1.0.jar shipping.jar
         VALIDATE $? "Moving the target application to parent folder"
-    else if [ "$PKG" -eq "python3 gcc python3-devel" ]; then
+    else if [ "$PKG" = "python3 gcc python3-devel" ]; then
         pip3 install -r requirements.txt  &>> $LOGS_FILE
         VALIDATE $? "Download and install dependencies"
-    else if [ "$PKG" -eq "golang" ]; then
+    else if [ "$PKG" = "golang" ]; then
         go mod init dispatch  &>> $LOGS_FILE
         VALIDATE $? "Initializing the dispatch module"
 
