@@ -64,7 +64,7 @@ INSTALL_PACKAGE() {
     SRVCNAME=$1
     PCK_NAME=$2
 
-    dnf install "$PCK_NAME" -y &>> $LOGS_FILE
+    dnf install $PCK_NAME -y &>> $LOGS_FILE
     VALIDATE $? "Installing $SRVCNAME"
 
 }
