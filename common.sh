@@ -132,7 +132,7 @@ INSTALL_APP() {
         mv "target/shipping-1.0.jar" "shipping.jar"
         VALIDATE $? "Moving the target application to parent folder"
 
-    elif [ "$PKG" = "python" ]; then
+    elif [ "$PKG" = "python3 gcc python3-devel" ]; then
         pip3 install -r "requirements.txt" &>> "$LOGS_FILE"
         VALIDATE $? "Download and install dependencies"
 
