@@ -1,6 +1,5 @@
 #!/bin/bash
 
-START_TIME=$(date +%s)
 # color codes in Linux, can be enabled with echo -e option
 R='\e[31m'
 G='\e[32m'
@@ -197,8 +196,4 @@ SYSCTL_RESTART() {
     systemctl restart $SNM 
     VALIDATE $? "Restart $SRNM after config changes"
 }
-
-END_TIME=$(date +%s)
-TOTAL_TIME=$(($END_TIME-$STARTTIME ))
-
 
