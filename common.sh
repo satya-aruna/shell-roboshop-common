@@ -144,7 +144,7 @@ INSTALL_APP() {
         go build  &>> $LOGS_FILE
         VALIDATE $? "Build the dispatch application"
     fi
-    }
+}
 
 
 SETUP_SYSD_SERVICE() {
