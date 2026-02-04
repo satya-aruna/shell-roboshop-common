@@ -18,35 +18,35 @@ INSTALL_SETUP() {
         PKGNAME=mongodb-org
         SERVICENAME=mongod 
         LABEL="Mongodb Server"   
-    else if [$SERVERNAME -eq "rabbitmq" ]; then
+    elif [$SERVERNAME -eq "rabbitmq" ]; then
         SETUP_REPOFILE $SERVERNAME rabbitmq.repo 
         PKGNAME=rabbitmq-server
         SERVICENAME=rabbitmq-server 
         LABEL="RabbitMQ Server"
-    else if [ $SERVERNAME -eq "mysql" ]; then
+    elif [ $SERVERNAME -eq "mysql" ]; then
         PKGNAME=mysql-server
         SERVICENAME=mysqld
         LABEL="MySQL Server"
-    else if [ $SERVERNAME -eq "redis" ]; then
+    elif [ $SERVERNAME -eq "redis" ]; then
         PKGNAME=redis
         VERSION=7
         LABEL="Redis Server"
         ENABLE_VERSION $PKGNAME $VERSION
-    else if [[ $SERVERNAME -eq "catalogue" || $SERVERNAME -eq "user" || $SERVERNAME -eq "cart" ]]; then
+    elif [[ $SERVERNAME -eq "catalogue" || $SERVERNAME -eq "user" || $SERVERNAME -eq "cart" ]]; then
         PKGNAME=nodejs
         VERSION=20
         ENABLE_VERSION $PKGNAME $VERSION
         LABEL="NodeJS"
-    else if [ $SERVERNAME -eq "shipping" ]; then
+    elif [ $SERVERNAME -eq "shipping" ]; then
         PKGNAME=maven
         LABEL="Maven"
-    else if [ $SERVERNAME -eq "payment" ]; then
+    elif [ $SERVERNAME -eq "payment" ]; then
         PKGNAME="python3 gcc python3-devel"
         LABEL="Python"
-    else if [ $SERVERNAME -eq "dispatch" ]; then
+    elif [ $SERVERNAME -eq "dispatch" ]; then
         PKGNAME=golang
         LABEL="GOLang"
-    else if [ $SERVERNAME -eq "frontend" ]; then
+    elif [ $SERVERNAME -eq "frontend" ]; then
         PKGNAME=nginx
         VERSION=1.24
         ENABLE_VERSION $PKGNAME $VERSION
@@ -63,7 +63,7 @@ INSTALL_SETUP() {
         DOWNLOAD_UNZIPAPP $SERVICENAME
         INSTALL_APP $PKGNAME
         SETUP_SYSD_SERVICE $SERVICENAME
-    else if [ $SERVICENAME -eq "frontend" ]; then
+    elif [ $SERVICENAME -eq "frontend" ]; then
         ENABLE_START_SYSCTL $LABEL $PKGNAME
         DOWNLOAD_UNZIPAPP $SERVICENAME
         SERVICENAME=$PKGNAME
