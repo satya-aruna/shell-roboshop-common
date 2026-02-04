@@ -149,6 +149,8 @@ INSTALL_APP()
 
         go build  &>> $LOGS_FILE
         VALIDATE $? "Build the dispatch application"
+    else
+        echo "Invalid pakage: $PKG"
     fi
 }
 
@@ -188,6 +190,8 @@ MODIFY_CONFIG()
     else if [ $SN -eq "nginx" ]; then
         cp $SCRIPT_DIR/$SN.conf /etc/$SN/$SN.conf
         VALIDATE $? "Create $SN Reverse Proxy Configuration"
+    else
+        echo "Invalid Service: $SN"
     fi
 }
 

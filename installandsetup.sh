@@ -32,7 +32,7 @@ INSTALL_SETUP()
         VERSION=7
         LABEL="Redis Server"
         ENABLE_VERSION $PKGNAME $VERSION
-    else if [[ $SERVERNAME -eq "catalogue" || $SERVERNAME -eq "user" || $SERVERNAME -eq "cart"]]; then
+    else if [ [ $SERVERNAME -eq "catalogue" || $SERVERNAME -eq "user" || $SERVERNAME -eq "cart"] ]; then
         PKGNAME=nodejs
         VERSION=20
         ENABLE_VERSION $PKGNAME $VERSION
@@ -55,7 +55,7 @@ INSTALL_SETUP()
 
     INSTALL_PACKAGE $LABEL $PKGNAME
 
-    if [[ $PKGNAME -eq "nodejs" || $PKGNAME -eq "maven" || $PKGNAME -eq "python3 gcc python3-devel" || $PKGNAME -eq "golang" ]]; then
+    if [ [ $PKGNAME -eq "nodejs" || $PKGNAME -eq "maven" || $PKGNAME -eq "python3 gcc python3-devel" || $PKGNAME -eq "golang" ] ]; then
         CREATE_APPUSER
         DOWNLOAD_UNZIPAPP $SERVICENAME
         INSTALL_APP $PKGNAME
