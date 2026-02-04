@@ -19,7 +19,7 @@ INSTALL_SETUP() {
         SERVICENAME=mongod 
         LABEL="Mongodb Server"   
     elif [ "$SERVERNAME" = "rabbitmq" ]; then
-        SETUP_REPOFILE $SERVERNAME rabbitmq.repo 
+        SETUP_REPOFILE "$SERVERNAME" rabbitmq.repo 
         PKGNAME=rabbitmq-server
         SERVICENAME=rabbitmq-server 
         LABEL="RabbitMQ Server"
@@ -31,11 +31,11 @@ INSTALL_SETUP() {
         PKGNAME=redis
         VERSION=7
         LABEL="Redis Server"
-        ENABLE_VERSION $PKGNAME $VERSION
+        ENABLE_VERSION "$PKGNAME" "$VERSION"
     elif [[ "$SERVERNAME" = "catalogue" || "$SERVERNAME" = "user" || "$SERVERNAME" = "cart" ]]; then
         PKGNAME=nodejs
         VERSION=20
-        ENABLE_VERSION $PKGNAME $VERSION
+        ENABLE_VERSION "$PKGNAME" "$VERSION"
         LABEL="NodeJS"
     elif [ "$SERVERNAME" = "shipping" ]; then
         PKGNAME=maven
@@ -49,30 +49,28 @@ INSTALL_SETUP() {
     elif [ "$SERVERNAME" = "frontend" ]; then
         PKGNAME=nginx
         VERSION=1.24
-        ENABLE_VERSION $PKGNAME $VERSION
+        ENABLE_VERSION "$PKGNAME" "$VERSION"
         LABEL="Nginx"
-    else
-        echo "Nothing to do"
     fi
 
-    INSTALL_PACKAGE $LABEL $PKGNAME
+    INSTALL_PACKAGE "$LABEL" "$PKGNAME"
 
     if [[ "$PKGNAME" = "nodejs" || "$PKGNAME" =  "maven" || "$PKGNAME" =  "python3 gcc python3-devel" || "$PKGNAME" = "golang" ]]; then
         CREATE_APPUSER
-        DOWNLOAD_UNZIPAPP $SERVICENAME
-        INSTALL_APP $PKGNAME
-        SETUP_SYSD_SERVICE $SERVICENAME
+        DOWNLOAD_UNZIPAPP "$SERVICENAME"
+        INSTALL_APP "$PKGNAME"
+        SETUP_SYSD_SERVICE "$SERVICENAME"
     elif [ "$SERVICENAME" = "frontend" ]; then
-        ENABLE_START_SYSCTL $LABEL $PKGNAME
-        DOWNLOAD_UNZIPAPP $SERVICENAME
-        SERVICENAME=$PKGNAME
+        ENABLE_START_SYSCTL "$LABEL $PKGNAME"
+        DOWNLOAD_UNZIPAPP "$SERVICENAME"
+        SERVICENAME="$PKGNAME"
     fi
 
     if [[ "$SERVICENAME" = "mongod" || "$SERVICENAME" = "redis" || "$SERVICENAME" = "nginx" ]]; then
-        MODIFY_CONFIG $SERVICENAME
+        MODIFY_CONFIG "$SERVICENAME"
     fi
 
-    ENABLE_START_SYSCTL $SRVERNAME $SERVICENAME
+    ENABLE_START_SYSCTL "$SRVERNAME" "$SERVICENAME"
 
     if [ "$SERVICENAME" = "catalogue" ]; then
         SETUP_REPOFILE mongodb mongo.repo
@@ -122,7 +120,7 @@ INSTALL_SETUP() {
         fi
     fi
     
-    SYSCTL_RESTART $SRVERNAME $SERVICENAME
+    SYSCTL_RESTART "$SRVERNAME" "$SERVICENAME"
 
 }
 
